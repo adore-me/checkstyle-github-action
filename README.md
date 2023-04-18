@@ -1,4 +1,4 @@
-![build-test](https://github.com/jwgmeligmeyling/checkstyle-github-action/workflows/build-test/badge.svg)
+![build-test](https://github.com/adore-me/checkstyle-github-action/workflows/build-test/badge.svg)
 
 # Checkstyle GitHub Action
 
