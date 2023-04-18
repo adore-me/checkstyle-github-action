@@ -1,21 +1,22 @@
 name: "build-test"
 on:
   pull_request:
+    types: [ opened, synchronize, reopened, ready_for_review ]
     branches:
       - master
 jobs:
   build: # make sure build/ci work properly
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-    - run: |
-        npm install
-    - run: |
-        npm run all
+      - uses: actions/checkout@v2
+      - run: |
+          npm install
+      - run: |
+          npm run all
   test: # make sure the action works on a clean machine without building
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-    - uses: ./
-      with: 
-        path: '**/checkstyle-result.xml'
+      - uses: actions/checkout@v2
+      - uses: ./
+        with:
+          path: '**/checkstyle-result.xml'
