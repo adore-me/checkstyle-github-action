@@ -12,7 +12,7 @@ jobs:
       - run: |
           npm install
       - run: |
-          set NODE_OPTIONS=--openssl-legacy-provider && npm run all
+          npm run all
   test: # make sure the action works on a clean machine without building
     runs-on: ubuntu-latest
     steps:
