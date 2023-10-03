@@ -209,16 +209,7 @@ function getConclusion(annotations) {
     if (annotations.length === 0) {
         return 'success';
     }
-    const annotationsByLevel = (0, ramda_1.groupBy)(a => a.annotation_level, annotations);
-    if (annotationsByLevel[github_1.AnnotationLevel.failure] &&
-        annotationsByLevel[github_1.AnnotationLevel.failure].length) {
-        return 'failure';
-    }
-    else if (annotationsByLevel[github_1.AnnotationLevel.warning] &&
-        annotationsByLevel[github_1.AnnotationLevel.warning].length) {
-        return 'neutral';
-    }
-    return 'success';
+    return 'failure';
 }
 function createCheck(name, title, annotations, numErrors, conclusion) {
     return __awaiter(this, void 0, void 0, function* () {
