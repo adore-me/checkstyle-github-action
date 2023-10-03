@@ -64,24 +64,7 @@ function getConclusion(
     return 'success'
   }
 
-  const annotationsByLevel: {[p: string]: Annotation[]} = groupBy(
-    a => a.annotation_level,
-    annotations
-  )
-
-  if (
-    annotationsByLevel[AnnotationLevel.failure] &&
-    annotationsByLevel[AnnotationLevel.failure].length
-  ) {
-    return 'failure'
-  } else if (
-    annotationsByLevel[AnnotationLevel.warning] &&
-    annotationsByLevel[AnnotationLevel.warning].length
-  ) {
-    return 'neutral'
-  }
-
-  return 'success'
+  return 'failure';
 }
 
 async function createCheck(
