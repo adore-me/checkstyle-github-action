@@ -16,7 +16,7 @@ async function run(): Promise<void> {
 
     const searchResult = await findResults(path)
     if (searchResult.filesToUpload.length === 0) {
-      core.warning(
+      core.error(
         `No files were found for the provided path: ${path}. No results will be uploaded.`
       )
     } else {
