@@ -183,6 +183,7 @@ function run() {
             const searchResult = yield (0, search_1.findResults)(path);
             if (searchResult.filesToUpload.length === 0) {
                 core.error(`No files were found for the provided path: ${path}. No results will be uploaded.`);
+                core.setFailed(`No files were found for the provided path: ${path}`);
             }
             else {
                 core.info(`With the provided path, there will be ${searchResult.filesToUpload.length} results uploaded`);
