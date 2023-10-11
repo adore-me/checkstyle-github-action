@@ -172,8 +172,7 @@ const search_1 = __nccwpck_require__(2506);
 const constants_1 = __nccwpck_require__(5105);
 const annotations_1 = __nccwpck_require__(5598);
 const ramda_1 = __nccwpck_require__(4119);
-const github_1 = __nccwpck_require__(5928);
-const github_2 = __nccwpck_require__(5438);
+const github_1 = __nccwpck_require__(5438);
 const MAX_ANNOTATIONS_PER_REQUEST = 50;
 function run() {
     return __awaiter(this, void 0, void 0, function* () {
@@ -183,7 +182,8 @@ function run() {
             const title = core.getInput(constants_1.Inputs.Title);
             const searchResult = yield (0, search_1.findResults)(path);
             if (searchResult.filesToUpload.length === 0) {
-                core.warning(`No files were found for the provided path: ${path}. No results will be uploaded.`);
+                core.error(`No files were found for the provided path: ${path}. No results will be uploaded.`);
+                core.setFailed(`No files were found for the provided path: ${path}`);
             }
             else {
                 core.info(`With the provided path, there will be ${searchResult.filesToUpload.length} results uploaded`);
@@ -214,16 +214,16 @@ function getConclusion(annotations) {
 function createCheck(name, title, annotations, numErrors, conclusion) {
     return __awaiter(this, void 0, void 0, function* () {
         core.info(`Uploading ${annotations.length} / ${numErrors} annotations to GitHub as ${name} with conclusion ${conclusion}`);
-        const octokit = (0, github_2.getOctokit)(core.getInput(constants_1.Inputs.Token));
-        let sha = github_2.context.sha;
-        if (github_2.context.payload.pull_request) {
-            sha = github_2.context.payload.pull_request.head.sha;
+        const octokit = (0, github_1.getOctokit)(core.getInput(constants_1.Inputs.Token));
+        let sha = github_1.context.sha;
+        if (github_1.context.payload.pull_request) {
+            sha = github_1.context.payload.pull_request.head.sha;
         }
-        const req = Object.assign(Object.assign({}, github_2.context.repo), { ref: sha });
+        const req = Object.assign(Object.assign({}, github_1.context.repo), { ref: sha });
         const res = yield octokit.checks.listForRef(req);
         const existingCheckRun = res.data.check_runs.find(check => check.name === name);
         if (!existingCheckRun) {
-            const createRequest = Object.assign(Object.assign({}, github_2.context.repo), { head_sha: sha, conclusion,
+            const createRequest = Object.assign(Object.assign({}, github_1.context.repo), { head_sha: sha, conclusion,
                 name, status: 'completed', output: {
                     title,
                     summary: `${numErrors} violation(s) found`,
@@ -233,7 +233,7 @@ function createCheck(name, title, annotations, numErrors, conclusion) {
         }
         else {
             const check_run_id = existingCheckRun.id;
-            const update_req = Object.assign(Object.assign({}, github_2.context.repo), { conclusion,
+            const update_req = Object.assign(Object.assign({}, github_1.context.repo), { conclusion,
                 check_run_id, status: 'completed', output: {
                     title,
                     summary: `${numErrors} violation(s) found`,
