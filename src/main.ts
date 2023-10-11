@@ -16,19 +16,9 @@ async function run(): Promise<void> {
 
     const searchResult = await findResults(path)
     if (searchResult.filesToUpload.length === 0) {
-      core.error(
+      core.setFailed(
         `No files were found for the provided path: ${path}. No results will be uploaded.`
       )
-
-      await createCheck(
-        `No files were found for the provided path: ${path}. No results will be uploaded.`,
-        title,
-        [],
-        0,
-        'failure'
-      )
-
-      return
     } else {
       core.info(
         `With the provided path, there will be ${searchResult.filesToUpload.length} results uploaded`
@@ -74,7 +64,7 @@ function getConclusion(
     return 'success'
   }
 
-  return 'failure';
+  return 'failure'
 }
 
 async function createCheck(
