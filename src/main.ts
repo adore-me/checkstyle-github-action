@@ -19,6 +19,16 @@ async function run(): Promise<void> {
       core.error(
         `No files were found for the provided path: ${path}. No results will be uploaded.`
       )
+
+      await createCheck(
+        `No files were found for the provided path: ${path}. No results will be uploaded.`,
+        title,
+        [],
+        0,
+        'failure'
+      )
+
+      return
     } else {
       core.info(
         `With the provided path, there will be ${searchResult.filesToUpload.length} results uploaded`
